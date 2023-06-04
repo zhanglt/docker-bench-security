@@ -207,8 +207,7 @@ check_1_1_6() {
 check_1_1_7() {
   local id="1.1.7"
   local desc="Ensure auditing is configured for Docker files and directories - docker.service (Automated)"
-  local remediation
-  remediation="Install auditd. Add -w $(get_service_file docker.service) -k docker to the /etc/audit/rules.d/audit.rules file. Then restart the audit daemon using command service auditd restart."
+  local remediation="Install auditd. Add -w $(get_service_file docker.service) -k docker to the /etc/audit/rules.d/audit.rules file. Then restart the audit daemon using command service auditd restart."
   local remediationImpact="Audit can generate large log files. So you need to make sure that they are rotated and archived periodically. Create a separate partition for audit logs to avoid filling up other critical partitions."
   local check="$id - $desc"
   starttestjson "$id" "$desc"
@@ -242,8 +241,7 @@ check_1_1_7() {
 check_1_1_8() {
   local id="1.1.8"
   local desc="Ensure auditing is configured for Docker files and directories - containerd.sock (Automated)"
-  local remediation
-  remediation="Install auditd. Add -w $(get_service_file containerd.socket) -k docker to the /etc/audit/rules.d/audit.rules file. Then restart the audit daemon using command service auditd restart."
+  local remediation="Install auditd. Add -w $(get_service_file containerd.socket) -k docker to the /etc/audit/rules.d/audit.rules file. Then restart the audit daemon using command service auditd restart."
   local remediationImpact="Audit can generate large log files. So you need to make sure that they are rotated and archived periodically. Create a separate partition for audit logs to avoid filling up other critical partitions."
   local check="$id - $desc"
   starttestjson "$id" "$desc"
@@ -276,8 +274,7 @@ check_1_1_8() {
 check_1_1_9() {
   local id="1.1.9"
   local desc="Ensure auditing is configured for Docker files and directories - docker.socket (Automated)"
-  local remediation
-  remediation="Install auditd. Add -w $(get_service_file docker.socket) -k docker to the /etc/audit/rules.d/audit.rules file. Then restart the audit daemon using command service auditd restart."
+  local remediation="Install auditd. Add -w $(get_service_file docker.socket) -k docker to the /etc/audit/rules.d/audit.rules file. Then restart the audit daemon using command service auditd restart."
   local remediationImpact="Audit can generate large log files. So you need to make sure that they are rotated and archived periodically. Create a separate partition for audit logs to avoid filling up other critical partitions."
   local check="$id - $desc"
   starttestjson "$id" "$desc"
@@ -378,7 +375,7 @@ check_1_1_11() {
 
 check_1_1_12() {
   local id="1.1.12"
-  local desc="1.1.12 Ensure auditing is configured for Dockerfiles and directories - /etc/containerd/config.toml (Automated)"
+  local desc="Ensure auditing is configured for Dockerfiles and directories - /etc/containerd/config.toml (Automated)"
   local remediation="Install auditd. Add -w /etc/containerd/config.toml -k docker to the /etc/audit/rules.d/audit.rules file. Then restart the audit daemon using command service auditd restart."
   local remediationImpact="Audit can generate large log files. So you need to make sure that they are rotated and archived periodically. Create a separate partition for audit logs to avoid filling up other critical partitions."
   local check="$id - $desc"
