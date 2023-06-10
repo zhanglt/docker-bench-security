@@ -27,15 +27,15 @@ func t(text string, t *translator.Translator) string {
 func main() {
 	//需要翻译的文件列表
 	var tmpl []string
-	tmpl = append(tmpl, "../tests/1_host_configuration")
-	tmpl = append(tmpl, "../tests/2_docker_daemon_configuration")
-	tmpl = append(tmpl, "../tests/3_docker_daemon_configuration_files")
-	tmpl = append(tmpl, "../tests/4_container_images")
-	tmpl = append(tmpl, "../tests/5_container_runtime")
-	tmpl = append(tmpl, "../tests/6_docker_security_operations")
-	tmpl = append(tmpl, "../tests/7_docker_swarm_configuration")
-	tmpl = append(tmpl, "../tests/8_docker_enterprise_configuration")
-	tmpl = append(tmpl, "../tests/99_community_checks")
+	tmpl = append(tmpl, "1_host_configuration.sh")
+	tmpl = append(tmpl, "2_docker_daemon_configuration.sh")
+	tmpl = append(tmpl, "3_docker_daemon_configuration_files.sh")
+	tmpl = append(tmpl, "4_container_images.sh")
+	tmpl = append(tmpl, "5_container_runtime.sh")
+	tmpl = append(tmpl, "6_docker_security_operations.sh")
+	tmpl = append(tmpl, "7_docker_swarm_configuration.sh")
+	tmpl = append(tmpl, "8_docker_enterprise_configuration.sh")
+	tmpl = append(tmpl, "99_community_checks.sh")
 	c := translator.Config{
 		Proxy: "http://127.0.0.1:10809",
 	}
@@ -43,7 +43,7 @@ func main() {
 
 	for _, file := range tmpl {
 
-		err := ReadLines(file+".sh", file+"_zh.sh", ts)
+		err := ReadLines("../tests/"+file, "../tests_zh/"+file, ts)
 		if err != nil {
 			fmt.Printf("%s文件处理错误:%s", file, err)
 		}
@@ -73,7 +73,7 @@ func ReadLines(inFile, outFile string, ts *translator.Translator) error {
 			return err
 		}
 		s := string(bytes)
-		tmp := getStr(s, "local desc=", "local remediation=", "local remediationImpact=", ts)
+		tmp := getStr(ts, s, "local desc=", "local remediation=", "local remediationImpact=")
 		if tmp != "" {
 			s = tmp
 		}
@@ -83,20 +83,14 @@ func ReadLines(inFile, outFile string, ts *translator.Translator) error {
 	err = write.Flush()
 	return err
 }
-func getStr(str, substr1, substr2, substr3 string, ts *translator.Translator) string {
-
-	if strings.Contains(str, substr1) {
-		return substring(str, substr1, ts)
-	}
-	if strings.Contains(str, substr2) {
-		return substring(str, substr2, ts)
-	}
-	if strings.Contains(str, substr3) {
-		return substring(str, substr3, ts)
+func getStr(ts *translator.Translator, str string, substr ...string) string {
+	for _, item := range substr {
+		if strings.Contains(str, item) {
+			return substring(str, item, ts)
+		}
 	}
 	return ""
 }
-
 func substring(str, substr string, ts *translator.Translator) string {
 	var s string
 	l := len(str)
